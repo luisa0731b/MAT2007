@@ -1,0 +1,91 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\captionsetup{skip=3pt}
+
+\title{\vspace{-1.2cm} Flightless Friends! How strongly is flipper length related to body mass?}
+\author{Luisa Burduselu | MAT2007}
+\date{October 15, 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1.0cm}
+
+\section{Background}
+Between 2007 and 2009, Dr. Kristen (alongside other researchers) at Palmer Station, Antarctica, collected data regarding body measurements of three penguin species: the Adelie, Chinstrap, and Gentoo. Body mass is a good indicator of an animal's condition, but flipper length can be much easier to measure, especially when out in the field. As such, this project asked "How strongly is flipper length related to body mass within each penguin species, and how much of the variation in body mass does flipper length explain?" This answer will determine whether it is worth relying on flipper length as the body mass predictor.
+
+\section{Dataset Description}
+The dataset recorded body-size measurements such as culmen (upper bill ridge) length and depth, flipper length and body mass, and information such as the sex and growth stage of the penguin (Horst 2022). Two of the 344 penguins had no related measurements logged and were therefore excluded, leaving $N=342$ penguins (151 Adelie, 68 Chinstrap, and 123 Gentoo). Before conducting any analyses, the three penguin species' flipper lengths and body masses were plotted separately to see if there are any noticeable differences, thus deciding whether they should be analyzed separately.
+
+\begin{table}[ht]
+\centering
+\caption{Summary of the two variables per species: mean $\pm$ statistical uncertainty of the mean, and sample standard deviation (SD).}
+\begin{tabular}{lrcccc}
+\toprule
+ & & \multicolumn{2}{c}{Flipper length (mm)} & \multicolumn{2}{c}{Body mass (g)}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Species & $N$ & mean $\pm$ unc. & SD & mean $\pm$ unc. & SD\\
+\midrule
+Adelie    & 151 & $190.0 \pm 0.5$ & 6.5 & $3701 \pm 36$ & 459\\
+Chinstrap &  68 & $195.8 \pm 0.8$ & 7.1 & $3733 \pm 46$ & 384\\
+Gentoo    & 123 & $217.2 \pm 0.6$ & 6.5 & $5076 \pm 46$ & 504\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{peng_fig1_hist.png}
+    \caption{Distributions of flipper length (top) and body mass (bottom) for each species, with the dashed line marking the mean}
+    \label{fig:placeholder}
+\end{figure}
+
+Gentoo penguins are clearly larger than the other two species (flipper length about 217~mm versus 190--196~mm, body mass about 5100~g versus 3700~g), and all species differ in the spread of their measurements, so a single pooled analysis would mix the species size differences with the relationship we want to study. As such, each species will be analyzed separately.
+
+\section{Method}
+This penguin analysis was conducted in Python and run on Visual Studio Code. For each species, body mass $y$ was described in a linear regression function of flipper length $x$, using $y = \beta_0 + \beta_1 x$, where $\beta_1$ is the slope (change in predicted body mass per additional millimeter of flipper) and $\beta_0$ is the intercept (the value at zero flipper length, which has no biological meaning, but it is needed to plot the line). The line was found through the "least squares" method, which is done by subtracting $\sum_i (y_i-\hat y_i)^2$, which is the squared differences between the actual measured masses $y_i$ and the predicted masses $\hat y_i$ that drawn from the line. The strength of this relationship is defined by the "Pearson correlation coefficient" $r$. Additionally, to determine how much of the variation in body mass is actually explained by flipper length, the coefficient of determination is considered $R^2 = 1-\mathrm{SS}_\mathrm{res}/\mathrm{SS}_\mathrm{tot}$ (where SSres is the residual sum of squares).
+
+\section{Results}
+
+\begin{table}[ht]
+\centering
+\caption{Regression results per species (body mass in g, flipper length in mm).}
+\begin{tabular}{lcccrc}
+\toprule
+Species & $r$ & $R^2$ & slope $\beta_1$ (g/mm) & intercept $\beta_0$ (g) & $p$\\
+\midrule
+Adelie    & 0.47 & 0.22 & 32.8 & $-2536$ & $<0.001$\\
+Chinstrap & 0.64 & 0.41 & 34.6 & $-3037$ & $<0.001$\\
+Gentoo    & 0.70 & 0.49 & 54.6 & $-6787$ & $<0.001$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{peng_scatterplots_all.png}
+    \caption{Body mass versus flipper length for each species, with the least-squares line}
+    \label{fig:placeholder}
+\end{figure}
+
+In all three species, flipper length is positively related to body mass. In other words, penguins with longer flippers tend to be heavier! Every $p$-value is below $0.001$, so these observed relationships are very unlikely to be due to chance alone. The strength differs between species, from a moderate correlation for Adelie ($r=0.47$) to a stronger one for Chinstrap ($r=0.64$) and Gentoo ($r=0.70$). Flipper length explains about 22\,\% of the variation in body mass for Adelie, 41\,\% for Chinstrap and 49\,\% for Gentoo. Each additional millimeter of flipper corresponds to roughly 33, 35 and 55~g of extra predicted mass, respectively (as seen by the slope).
+
+\section{Discussion and Conclusion}\vspace{-0.2em}
+Flipper length is a statistically significant predictor of body mass in all three species, but not a very precise one. A small $p$-value only suggests that any observed relationships are unlikely to be due to chance, whereas $R^2$ shows how well it predicts. For Gentoo, about half of the variation in body mass is explained by something other than flipper length, and for Adelie, almost 80\,\% is. Two penguins of the same species and flipper length can differ in mass by several hundred grams. Correlation does not equal causation: longer flippers probably just reflect overall body size and composition. The dataset's other variables, like sex, may contribute to differences. A future analysis could include several variables at once, for example by comparing means for 3 or more groups and determining which has the greatest impact through an ANOVA test. In conclusion, flipper length gives a quick and useful hint of a penguin's body mass, especially for Gentoo and Chinstrap penguins, but it cannot replace weighing the animal.
+
+
+
+\begin{thebibliography}{9}
+\bibitem{horst2022} Horst, A. M., Hill, A. P., & Gorman, K. B. (2022, June 21). Palmer Archipelago Penguins Data in the Palmer Penguins Package - An Alternative to Anderson’s Irises. The R Journal.). \emph{PLoS ONE} 9(3): e90081.
+\end{thebibliography}
+
+\end{document}
