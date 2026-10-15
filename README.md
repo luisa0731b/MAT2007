@@ -15,7 +15,7 @@ You can find the code used to run this project titled as "PenguinAnalysis.py". A
 - matplotlib (for figures)
 - scipy (imports scipy statistic tools)
 
-To download the packages, you can enter the terminal window at the bottom of your screen, and type and enter the following commands, respectively (and one at a time):
+To download the packages, you can enter the terminal window at the bottom of your screen, and type + Enter the following commands, respectively (and one at a time):
 - pip install numpy OR pip3 install numpy
 - python -m pip install pandas OR pip install pandas
 - pip install matplotlib OR pip3 install matplotlib OR python -m pip install matplotlib
