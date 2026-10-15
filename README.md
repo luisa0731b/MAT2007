@@ -1,6 +1,7 @@
 MAT2007
 # Flightless Friends!
 **How strongly is flipper length related to body mass?**
+
 This project used data collected between 2007 and 2009, and made publicly available by Dr. Kristen and other researchers from the Palmer Station in Antarctica. Data regarding the body measurements of three penguins species was collected:
 - Adelie penguins
 - Chinstrap penguins
