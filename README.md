@@ -6,6 +6,7 @@ This project used data collected between 2007 and 2009, and made publicly availa
 - Adelie penguins
 - Chinstrap penguins
 - Gentoo penguins
+
 Body mass is a good indicator of an animal's condition, but flipper length can be much easier to measure, especially when out in the field. This project asked "How strongly is flipper length related to body mass within each penguin species, and how much of the variation in body mass does flipper length explain?" This answer will determine whether it is worth relying on flipper length as the body mass predictor.
 
 ### Software Dependencies
